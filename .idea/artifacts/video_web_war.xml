@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="video-web:war">
+    <output-path>$PROJECT_DIR$/video-web/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>video-web</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="video-web.war">
+      <element id="artifact" artifact-name="video-web:war exploded" />
+    </root>
+  </artifact>
+</component>
