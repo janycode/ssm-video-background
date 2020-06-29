@@ -20,6 +20,11 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+    @RequestMapping("/toLogin")
+    public String toLogin() {
+        return "/behind/login.jsp";
+    }
+
     /**
      * 操作登录
      * @param admin
@@ -27,8 +32,13 @@ public class AdminController {
      */
     @RequestMapping("/login")
     @ResponseBody
-    public String login(Admin admin) {
-        return adminService.login(admin) != null ? "success" : "error";
+    public String login(Admin admin, HttpSession session) {
+        Admin loginAdmin = adminService.login(admin);
+        if (loginAdmin != null) {
+            session.setAttribute("loginAdmin", loginAdmin);
+            return "success";
+        }
+        return "error";
     }
 
     /**

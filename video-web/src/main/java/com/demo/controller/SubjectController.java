@@ -23,7 +23,7 @@ public class SubjectController {
 
         ModelAndView mav = new ModelAndView();
         mav.addObject("subjects", subjects);
-        mav.setViewName("/behind/login.jsp");
+        //mav.setViewName("/behind/login.jsp");
         return mav;
     }
 
