@@ -42,11 +42,11 @@ public class VideoController {
     @RequestMapping("/list")
     public ModelAndView findAll(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                 @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
-                                HttpSession session,
+                                //HttpSession session,
                                 QueryVo queryVo) {
         // 如果用户有输入条件，以用户输入条件优先；用户输入为空时，取 session 中的内容查询。
-        queryVo = checkQueryVo(queryVo, session);
-        session.setAttribute("queryVo", queryVo);
+        //queryVo = checkQueryVo(queryVo, session);
+        //session.setAttribute("queryVo", queryVo);
 
         ModelAndView mav = new ModelAndView();
 
