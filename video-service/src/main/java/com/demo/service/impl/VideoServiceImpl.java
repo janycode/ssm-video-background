@@ -10,6 +10,7 @@ import javafx.scene.shape.Circle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -30,12 +31,17 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public int delVideoByIds(List<Integer> asList) {
+    public int delVideoByIds(Integer[] ids) {
         int count = 0;
-        for (Integer id : asList) {
+        for (Integer id : ids) {
             count += videoMapper.deleteByPrimaryKey(id);
         }
         return count;
+//        VideoExample example = new VideoExample();
+//        VideoExample.Criteria criteria = example.createCriteria();
+//        // DELETE FROM `table` WHERE id IN(1, 2, 3); IN 效率较低不如遍历
+//        criteria.andIdIn(Arrays.asList(ids));
+//        return videoMapper.deleteByExample(example);
     }
 
     @Override

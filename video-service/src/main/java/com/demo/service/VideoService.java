@@ -11,7 +11,7 @@ public interface VideoService {
 
     int delVideoById(Integer id);
 
-    int delVideoByIds(List<Integer> asList);
+    int delVideoByIds(Integer[] ids);
 
     Video findById(Integer id);
 

@@ -2,7 +2,7 @@ package com.demo.utils;
 
 import java.io.Serializable;
 
-public class QueryVo {
+public class QueryVo implements Serializable {
     private String title;
     private String speakerId;
     private String courseId;

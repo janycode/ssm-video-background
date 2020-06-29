@@ -79,7 +79,7 @@ public class VideoController {
     @RequestMapping("/delBatchVideos")
     public String delVideoByIds(Integer[] ids) {
         // System.out.println(Arrays.toString(ids));
-        videoService.delVideoByIds(Arrays.asList(ids));
+        videoService.delVideoByIds(ids);
         return "forward:/video/list";
     }
 

@@ -38,6 +38,7 @@
             <mvc:mapping path="/admin/*"/>
             <!--配置不拦截-->
             <mvc:exclude-mapping path="/admin/toLogin"/>
+            <mvc:exclude-mapping path="/admin/login"/>
             <mvc:exclude-mapping path="/WEB-INF/jsp/behind/login.jsp"/>
             <!--配置拦截器对象-->
             <bean class="com.demo.interception.UnloggedInterception"/>

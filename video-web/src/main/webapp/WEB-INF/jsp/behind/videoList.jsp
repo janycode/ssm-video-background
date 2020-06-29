@@ -74,7 +74,6 @@
         });
 
         function delVideoById(obj, id, name) {
-
             Confirm.show('溫馨提示', '您確定要刪除' + name + '嗎？', {
                 'Delete': {
                     'primary': true,
@@ -86,7 +85,7 @@
                         $.post("${pageContext.request.contextPath}/video/videoDel", params, function (data) {
                             if (data == 'success') {
                                 Confirm.show('处理结果', '恭喜您删除成功');
-                                //请用js删除掉那条记录
+                                //js删除掉那条记录
                                 $(obj).parent().parent().remove();
                             } else {
                                 Confirm.show('处理结果', '操作失败');
@@ -212,7 +211,8 @@
         <div class="col-md-4"></div>
         <div class="col-md-6">
             <!-- 查询相关组件 -->
-            <form class="navbar-form navbar-right" action="${pageContext.request.contextPath}/video/list" method="post">
+            <form id="formVideoList" class="navbar-form navbar-right" action="${pageContext.request.contextPath}/video/list" method="post">
+                <input type="hidden" id="pageNum" name="pageNum"/>
                 <input type="text" name="title" class="form-control" placeholder="标题" value="${queryVo.title}">
                 <div class="btn-group">
                     <button type="button" id="speakerName"
@@ -337,40 +337,66 @@
     <nav aria-label="..." class="navbar-right" style="margin-right:15px">
         <ul class="pagination">
             <c:if test="${pageInfo.pageNum == 1}">
-                <li class="disabled"><a href="javascript:void(0)" aria-label="Previous"><span
-                        aria-hidden="true">首</span></a></li>
-                <li class="disabled"><a href="javascript:void(0)" aria-label="Previous"><span
-                        aria-hidden="true">«</span></a></li>
+                <li class="disabled">
+                    <a href="javascript:void(0)" aria-label="Previous">
+                        <span aria-hidden="true">首</span>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href="javascript:void(0)" aria-label="Previous">
+                        <span aria-hidden="true">«</span>
+                    </a>
+                </li>
             </c:if>
             <c:if test="${pageInfo.pageNum != 1}">
-                <li><a href="/video/list?pageNum=1" aria-label="Previous"><span aria-hidden="true">首</span></a></li>
-                <li><a href="/video/list?pageNum=${pageInfo.pageNum - 1}" aria-label="Previous"><span
-                        aria-hidden="true">«</span></a></li>
+                <li>
+                    <a href="" aria-label="Previous" onclick="jumpPage(1)">
+                        <span aria-hidden="true">首</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="" aria-label="Previous" onclick="jumpPage(${pageInfo.pageNum - 1})">
+                        <span aria-hidden="true">«</span>
+                    </a>
+                </li>
             </c:if>
-            <!-- 当前选中样式：li class="active"
-                <span class="sr-only">(current)</span> -->
+            <!-- 当前选中样式：li class="active" -->
             <c:if test="${pageInfo.pages < 5}">
                 <c:forEach begin="1" end="${pageInfo.pages}" var="pageNo">
-                    <li id="liPage${pageNo}"><a href="" id="page${pageNo}">${pageNo}</a></li>
+                    <li id="liPage${pageNo}">
+                        <a href="javascript:void(0)" id="page${pageNo}">${pageNo}</a>
+                    </li>
                 </c:forEach>
             </c:if>
             <c:if test="${pageInfo.pages >= 5}">
-                <li id="liPage1"><a href="" id="page1">1</a></li>
-                <li id="liPage2"><a href="" id="page2">2</a></li>
-                <li id="liPage3"><a href="" id="page3">3</a></li>
-                <li id="liPage4"><a href="" id="page4">4</a></li>
-                <li id="liPage5"><a href="" id="page5">5</a></li>
+                <li id="liPage1"><a href="javascript:void(0)" id="page1">1</a></li>
+                <li id="liPage2"><a href="javascript:void(0)" id="page2">2</a></li>
+                <li id="liPage3"><a href="javascript:void(0)" id="page3">3</a></li>
+                <li id="liPage4"><a href="javascript:void(0)" id="page4">4</a></li>
+                <li id="liPage5"><a href="javascript:void(0)" id="page5">5</a></li>
             </c:if>
             <c:if test="${pageInfo.pageNum == pageInfo.pages}">
-                <li class="disabled"><a href="javascript:void(0)" aria-label="Next"><span
-                        aria-hidden="true">»</span></a></li>
-                <li class="disabled"><a href="javascript:void(0)" aria-label="Next"><span
-                        aria-hidden="true">尾</span></a></li>
+                <li class="disabled">
+                    <a href="javascript:void(0)" aria-label="Next">
+                        <span aria-hidden="true">»</span>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href="javascript:void(0)" aria-label="Next">
+                        <span aria-hidden="true">尾</span>
+                    </a>
+                </li>
             </c:if>
             <c:if test="${pageInfo.pageNum != pageInfo.pages}">
-                <li><a href="/video/list?pageNum=${pageInfo.pageNum + 1}" aria-label="Next"><span
-                        aria-hidden="true">»</span></a></li>
-                <li><a href="/video/list?pageNum=${pageInfo.pages}" aria-label="Next"><span aria-hidden="true">尾</span></a>
+                <li>
+                    <a href="javascript:void(0)" aria-label="Next" onclick="jumpPage(${pageInfo.pageNum + 1})">
+                        <span aria-hidden="true">»</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" aria-label="Next" onclick="jumpPage(${pageInfo.pages})">
+                        <span aria-hidden="true">尾</span>
+                    </a>
                 </li>
             </c:if>
         </ul>
@@ -386,7 +412,7 @@
     function changePageNo() {
         var currentPage = ${pageInfo.pageNum}; // typeof: number
         var showPageNos = 5; // 总共显示5页的页码
-        var link = "/video/list?pageNum=";
+        //var link = "/video/list?pageNum=";
 
         // $("#page1").text(currentPage - showPageNos + 1);
         // $("#page2").text(currentPage - showPageNos + 2);
@@ -398,17 +424,24 @@
             for (var i = 1; i <= 5; i++) {
                 var pageNo = currentPage - showPageNos + i;
                 $("#page" + i).text(pageNo);
-                $("#page" + i).attr("href", link + pageNo);
+                //$("#page" + i).attr("href", link + pageNo);
+                $("#page" + i).attr("onclick", "jumpPage(" + pageNo + ")");
             }
             $("#liPage" + showPageNos).attr("class", "active");
         } else {
             // 页码 < 5 时
             for (var i = 1; i <= 5; i++) {
                 $("#page" + i).text(i);
-                $("#page" + i).attr("href", link + i);
+                //$("#page" + i).attr("href", link + i);
+                $("#page" + i).attr("onclick", "jumpPage(" + i + ")");
             }
             $("#liPage" + currentPage).attr("class", "active");
         }
+    }
+
+    function jumpPage(pageNum) {
+        $("#pageNum").val(pageNum);
+        $("#formVideoList").submit();
     }
 </script>
 
