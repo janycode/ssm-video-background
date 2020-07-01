@@ -8,4 +8,13 @@ public interface UserService {
 
     List<User> findAll();
 
+    User login(User user);
+
+    int insertUser(User user);
+
+    User validateEmail(String email);
+
+    User queryUserByEmail(String userAccount);
+
+    boolean updatePassword(User user);
 }

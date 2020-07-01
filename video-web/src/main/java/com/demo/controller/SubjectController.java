@@ -19,11 +19,11 @@ public class SubjectController {
 
     @RequestMapping("/selectAll")
     public ModelAndView findAll() {
-        List<Subject> subjects = subjectService.findAll();
+        List<Subject> subjectList = subjectService.findAll();
 
         ModelAndView mav = new ModelAndView();
-        mav.addObject("subjects", subjects);
-        //mav.setViewName("/behind/login.jsp");
+        mav.addObject("subjectList", subjectList);
+        mav.setViewName("/before/index.jsp");
         return mav;
     }
 

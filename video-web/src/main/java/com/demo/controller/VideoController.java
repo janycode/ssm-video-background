@@ -6,6 +6,7 @@ import com.demo.service.SpeakerService;
 import com.demo.service.VideoService;
 import com.demo.utils.QueryVo;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
