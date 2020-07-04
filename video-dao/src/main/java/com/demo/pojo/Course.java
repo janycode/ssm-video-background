@@ -1,8 +1,14 @@
 package com.demo.pojo;
 
-import lombok.ToString;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@ToString
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Course {
     private Integer id;
 
@@ -12,35 +18,6 @@ public class Course {
 
     private String courseDesc;
 
-    public Integer getId() {
-        return id;
-    }
+    private List<Video> videoList;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getCourseTitle() {
-        return courseTitle;
-    }
-
-    public void setCourseTitle(String courseTitle) {
-        this.courseTitle = courseTitle == null ? null : courseTitle.trim();
-    }
-
-    public Integer getSubjectId() {
-        return subjectId;
-    }
-
-    public void setSubjectId(Integer subjectId) {
-        this.subjectId = subjectId;
-    }
-
-    public String getCourseDesc() {
-        return courseDesc;
-    }
-
-    public void setCourseDesc(String courseDesc) {
-        this.courseDesc = courseDesc == null ? null : courseDesc.trim();
-    }
 }

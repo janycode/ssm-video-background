@@ -49,7 +49,7 @@ public class MailUtils {
             Transport transport = session.getTransport("smtp");
             // 9.设置火箭的发射目标（第三个参数就是你的邮箱授权码）
             //transport.connect("smtp.163.com", "发送者@163.com", "abcdefghabcdefgh");
-            transport.connect("smtp.qq.com", myEmail, "abcd");
+            transport.connect("smtp.qq.com", myEmail, "xxx");
             // 10.发送
             transport.sendMessage(message, message.getAllRecipients());
 

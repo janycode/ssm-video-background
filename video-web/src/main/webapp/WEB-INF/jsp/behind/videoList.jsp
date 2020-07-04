@@ -83,7 +83,7 @@
                             "id": id
                         };
                         $.post("${pageContext.request.contextPath}/video/videoDel", params, function (data) {
-                            if (data == 'success') {
+                            if (data === 'success') {
                                 Confirm.show('处理结果', '恭喜您删除成功');
                                 //js删除掉那条记录
                                 $(obj).parent().parent().remove();
@@ -301,7 +301,8 @@
                 <tr>
                     <td><input type="checkbox" name="ids" value="${video.id}"
                                onclick="selectOne(this)"/></td>
-                    <td>${status.count}</td>
+<%--                    <td>${status.count}</td>--%>
+                    <td>${video.id}</td>
                     <td>${video.title}</td>
                     <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${video.detail}</td>
                     <td>${video.speaker.speakerName}</td>

@@ -57,4 +57,9 @@ public class UserServiceImpl implements UserService {
     public boolean updatePassword(User user) {
         return userMapper.updateByPrimaryKey(user) == 1;
     }
+
+    @Override
+    public int updateUserByEmail(User user) {
+        return userMapper.updateByEmail(user);
+    }
 }

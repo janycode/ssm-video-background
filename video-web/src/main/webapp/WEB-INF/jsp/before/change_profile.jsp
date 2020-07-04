@@ -74,7 +74,7 @@
         <menu>
             <div class="container clearfix">
                 <ul class="clearfix f_left">
-                    <li><a href="${pageContext.request.contextPath}">首页</a></li>
+                    <li><a href="${pageContext.request.contextPath}/">首页</a></li>
                     <li><a href="${pageContext.request.contextPath}/course/course/1">课程</a></li>
                     <li><a href="#">关于我们</a></li>
                     <li class="menu_active"><a href="${pageContext.request.contextPath}/user/showMyProfile">个人中心</a></li>
@@ -85,12 +85,12 @@
                 </div>
                 <div id="user_bar">
                     <a href="${pageContext.request.contextPath}/user/showMyProfile">
-                      <c:if test="${empty user.imgUrl}">
+                      <c:if test="${empty user.imgurl}">
                          <img id="avatar" src="${pageContext.request.contextPath}/img/avatar_lg.png" alt="">
                       </c:if>
                       
-                      <c:if test="${not empty user.imgUrl}">
-                         <img id="avatar" src="http://localhost:8080/Videos/userAvatar/${user.imgUrl}" alt="">
+                      <c:if test="${not empty user.imgurl}">
+                         <img id="avatar" src="http://localhost:8080/Videos/userAvatar/${user.imgurl}" alt="">
                       </c:if>
                        
                     </a>
@@ -114,14 +114,14 @@
                     <h3><a href="${pageContext.request.contextPath}/user/showMyProfile">返回个人中心</a></h3>
                     <div class="proflle_tab_workplace clearfix">
                         <div class="profile_avatar_area">
-                            <img width="180px" height="180px"  src="http://localhost:8080/Videos/userAvatar/${user.imgUrl}">
+                            <img width="180px" height="180px"  src="http://localhost:8081/uploadfile/images/${user.imgurl}">
                         </div>
                         <div class="profile_ifo_area">
                             <!--http://localhost/video/user/changeProfile-->
-                            <form action="updateUser" method="post">
+                            <form action="${pageContext.request.contextPath}/user/updateUser" method="post">
                                 <input name="id" type="hidden" value="${user.id}">
                                 <div class="form_group">
-                                    <span class="dd">昵&#x3000;称：</span><input type="text" name="nickName" value="${user.nickName}" >
+                                    <span class="dd">昵&#x3000;称：</span><input type="text" name="nickname" value="${user.nickname}" >
                                 </div>
                                 <div class="form_group">
                                     <span class="dd">性&#x3000;别：</span>
@@ -130,7 +130,7 @@
                                 </div>
                                 <div class="form_group">
                                     <span class="dd">生&#x3000;日：</span>  <!-- 1990-10-04 -->
-                                    <input type="text"  name="birthday" value="${user.birthday}">
+                                    <input type="date"  name="birthday" value="${user.birthday}">
                                 </div>
                                 <div class="form_group">
                                     <span class="dd">邮&#x3000;箱：</span>
@@ -146,7 +146,7 @@
                                 </div>
                                 <div class="form_submit dd">
                                     <input type="submit" onclick="return commitForm();"  value="保&#x3000;存">
-                                    <a href="changeProfile">重置</a>
+                                    <a href="${pageContext.request.contextPath}/user/changeProfile">重置</a>
                                 </div>
                             </form>
                         </div>

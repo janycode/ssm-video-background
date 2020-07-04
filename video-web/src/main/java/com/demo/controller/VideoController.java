@@ -1,12 +1,14 @@
 package com.demo.controller;
 
+import com.demo.pojo.Course;
+import com.demo.pojo.Subject;
 import com.demo.pojo.Video;
 import com.demo.service.CourseService;
 import com.demo.service.SpeakerService;
+import com.demo.service.SubjectService;
 import com.demo.service.VideoService;
 import com.demo.utils.QueryVo;
 import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,11 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.transform.Source;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -31,14 +31,11 @@ public class VideoController {
     private SpeakerService speakerService;
     @Autowired
     private CourseService courseService;
+    @Autowired
+    private SubjectService subjectService;
 
     /**
      * 视频管理列表展示页
-     * @param pageNum
-     * @param pageSize
-     * @param session
-     * @param queryVo
-     * @return
      */
     @RequestMapping("/list")
     public ModelAndView findAll(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
@@ -49,18 +46,88 @@ public class VideoController {
         //queryVo = checkQueryVo(queryVo, session);
         //session.setAttribute("queryVo", queryVo);
 
+        System.out.println(">> return ModelAndView");
         ModelAndView mav = new ModelAndView();
-
-        List<Video> videoList = videoService.findAll(pageNum, pageSize, queryVo);
-        PageInfo<Video> pageInfo = new PageInfo<>(videoList);
+        PageInfo<Video> pageInfo = videoService.findAll(pageNum, pageSize, queryVo);
         mav.addObject("pageInfo", pageInfo);
 
         // 获取两个下拉菜单的内容
         getComboBox(mav);
 
-        mav.setViewName("/behind/videoList.jsp");
+        mav.setViewName("/behind/videoList.jsp"); // ModelAndView 返回值，会拼前缀
         return mav;
     }
+
+//    /**
+//     * 视频管理列表展示页
+//     */
+//    @RequestMapping("/list")
+//    public String findAll(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+//                           @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+//                           HttpSession session, // Model
+//                           QueryVo queryVo) {
+//        System.out.println(">> return String");
+//
+//        List<Video> videoList = videoService.findAll(pageNum, pageSize, queryVo);
+//        PageInfo<Video> pageInfo = new PageInfo<>(videoList);
+//        session.setAttribute("pageInfo", pageInfo);
+//
+//        // 获取两个下拉菜单的内容
+//        List<Speaker> speakerList = speakerService.findAll();
+//        session.setAttribute("speakerList", speakerList);
+//        List<Course> courseList = courseService.findAll();
+//        session.setAttribute("courseList", courseList);
+//
+//        return "/behind/videoList.jsp"; // String 返回值，会拼前缀
+//    }
+
+//    /**
+//     * 视频管理列表展示页
+//     */
+//    @RequestMapping("/list")
+//    public String findAll(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+//                          @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+//                          HttpSession session,
+//                          QueryVo queryVo) {
+//        System.out.println(">> return String + forward"); // forward redirect
+//
+//        List<Video> videoList = videoService.findAll(pageNum, pageSize, queryVo);
+//        PageInfo<Video> pageInfo = new PageInfo<>(videoList);
+//        session.setAttribute("pageInfo", pageInfo);
+//
+//        // 获取两个下拉菜单的内容
+//        List<Speaker> speakerList = speakerService.findAll();
+//        session.setAttribute("speakerList", speakerList);
+//        List<Course> courseList = courseService.findAll();
+//        session.setAttribute("courseList", courseList);
+//
+//        return "forward:/WEB-INF/jsp/behind/videoList.jsp"; // String+forward 返回值，不会拼前缀
+//    }
+
+//    /**
+//     * 视频管理列表展示页
+//     */
+//    @RequestMapping("/list")
+//    public void findAll(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+//                          @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+//                          HttpSession session,
+//                          HttpServletRequest request,
+//                          HttpServletResponse response,
+//                          QueryVo queryVo) throws ServletException, IOException {
+//        System.out.println(">> return String + forward 原生"); // forward redirect
+//
+//        List<Video> videoList = videoService.findAll(pageNum, pageSize, queryVo);
+//        PageInfo<Video> pageInfo = new PageInfo<>(videoList);
+//        session.setAttribute("pageInfo", pageInfo);
+//
+//        // 获取两个下拉菜单的内容
+//        List<Speaker> speakerList = speakerService.findAll();
+//        session.setAttribute("speakerList", speakerList);
+//        List<Course> courseList = courseService.findAll();
+//        session.setAttribute("courseList", courseList);
+//
+//        request.getRequestDispatcher("/WEB-INF/jsp/behind/videoList.jsp").forward(request, response);
+//    }
 
     /**
      * 通过 id 删除 1 条记录
@@ -68,6 +135,7 @@ public class VideoController {
      * @return
      */
     @RequestMapping("/videoDel")
+    @ResponseBody
     public String delVideoById(Integer id) {
         return videoService.delVideoById(id) == 1 ? "success" : "error";
     }
@@ -81,7 +149,7 @@ public class VideoController {
     public String delVideoByIds(Integer[] ids) {
         // System.out.println(Arrays.toString(ids));
         videoService.delVideoByIds(ids);
-        return "forward:/video/list";
+        return "redirect:/video/list";
     }
 
     /**
@@ -112,14 +180,15 @@ public class VideoController {
     @RequestMapping("/saveOrUpdate")
     public String saveOrUpdate(Video video) {
         System.out.println(video);
-        boolean flag;
         // id 不空时为修改、id 为空时为添加
         if (null != video.getId()) {
-            flag = videoService.updateById(video);
+            System.out.println("update...");
+            videoService.updateById(video);
         } else {
-            flag = videoService.add(video);
+            System.out.println("add...");
+            videoService.add(video);
         }
-        return "redirect:" + (flag ? "/video/list" : "/video/saveOrUpdate");
+        return "redirect:/video/list"; // 修改继续携带数据
     }
 
     /**
@@ -145,5 +214,34 @@ public class VideoController {
             return q;
         }
         return (QueryVo) session.getAttribute("queryVo");
+    }
+
+    @RequestMapping("/showVideo")
+    public ModelAndView showVideo(String videoId, String subjectName) {
+        //System.out.println("videoId=" + videoId + ",subjectName=" + subjectName);
+
+        ModelAndView mav = new ModelAndView();
+
+        // 获取导航栏下拉菜单
+        List<Subject> subjectList = subjectService.findAll();
+        mav.addObject("subjectList", subjectList);
+
+        // 通过 id 获取视频信息
+        Video video = videoService.findVideoById(Integer.parseInt(videoId));
+        mav.addObject("video", video);
+
+        // 通过 id 获取到视频信息中的课程id，获取课程下的视频列表
+        //List<Video> videoList = courseService.findVideoListById(video.getCourseId());
+        //mav.addObject("videoList", videoList);
+        System.out.println("video=" + video);
+        Course course = courseService.findVideoListById(video.getCourseId());
+        mav.addObject("course", course);
+        System.out.println(course);
+
+        mav.addObject("subjectName", subjectName);
+
+        //System.out.println("video=" + video);
+        mav.setViewName("/before/section.jsp");
+        return mav;
     }
 }

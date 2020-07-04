@@ -37,6 +37,7 @@
 <header>
     <div class="container">
         <span>欢迎来到Y先生教育！</span>
+        <a href="${pageContext.request.contextPath}/admin/toLogin">进入后台管理</a>
 
 
         <div id="regBlock" style="display:none;float:right">
@@ -61,10 +62,10 @@
 <nav class="w100">
     <div class="container">
         <img src="${pageContext.request.contextPath}/img/logo.png" alt="Y先生教育的logo"
-             onclick="location.href='${pageContext.request.contextPath}'" draggable="false">
+             onclick="location.href='${pageContext.request.contextPath}/'" draggable="false">
         <ul class="text_13 f_right">
             <li>
-                <a href="#" >首页</a>
+                <a href="${pageContext.request.contextPath}/" >首页</a>
             </li>
             <li class="nav_down">
                 高端课程<img src="${pageContext.request.contextPath}/img/nav_down.png" alt="" draggable="false">

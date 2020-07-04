@@ -1,8 +1,13 @@
 package com.demo.pojo;
 
-import lombok.ToString;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@ToString
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Speaker {
     private Integer id;
 
@@ -13,44 +18,4 @@ public class Speaker {
     private String headImgUrl;
 
     private String speakerDesc;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getSpeakerName() {
-        return speakerName;
-    }
-
-    public void setSpeakerName(String speakerName) {
-        this.speakerName = speakerName == null ? null : speakerName.trim();
-    }
-
-    public String getSpeakerJob() {
-        return speakerJob;
-    }
-
-    public void setSpeakerJob(String speakerJob) {
-        this.speakerJob = speakerJob == null ? null : speakerJob.trim();
-    }
-
-    public String getHeadImgUrl() {
-        return headImgUrl;
-    }
-
-    public void setHeadImgUrl(String headImgUrl) {
-        this.headImgUrl = headImgUrl == null ? null : headImgUrl.trim();
-    }
-
-    public String getSpeakerDesc() {
-        return speakerDesc;
-    }
-
-    public void setSpeakerDesc(String speakerDesc) {
-        this.speakerDesc = speakerDesc == null ? null : speakerDesc.trim();
-    }
 }

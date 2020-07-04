@@ -29,7 +29,7 @@
     <menu>
         <div class="container clearfix">
             <ul class="clearfix f_left">
-                <li><a href="${pageContext.request.contextPath}">首页</a></li>
+                <li><a href="${pageContext.request.contextPath}/">首页</a></li>
                 <li><a href="${pageContext.request.contextPath}/course/course/1">课程</a></li>
                 <li><a href="#">关于我们</a></li>
                 <li class="menu_active"><a href="${pageContext.request.contextPath}/user/showMyProfile">个人中心</a></li>

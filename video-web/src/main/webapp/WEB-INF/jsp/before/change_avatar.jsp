@@ -31,7 +31,7 @@
     <menu>
         <div class="container clearfix">
             <ul class="clearfix f_left">
-                <li><a href="${pageContext.request.contextPath}">首页</a></li>
+                <li><a href="${pageContext.request.contextPath}/">首页</a></li>
                 <li><a href="${pageContext.request.contextPath}/course/course/1">课程</a></li>
                 <li><a href="#">关于我们</a></li>
                 <li class="menu_active"><a href="${pageContext.request.contextPath}/user/showMyProfile">个人中心</a></li>
@@ -42,12 +42,12 @@
             </div>
             <div id="user_bar">
                 <a href="${pageContext.request.contextPath}/user/showMyProfile">
-                    <c:if test="${empty user.imgUrl}">
+                    <c:if test="${empty user.imgurl}">
                         <img id="avatar" src="${pageContext.request.contextPath}/img/avatar_lg.png" alt="">
                     </c:if>
 
-                    <c:if test="${not empty user.imgUrl}">
-                        <img id="avatar" src="http://localhost:8081/video/${user.imgUrl}" alt="">
+                    <c:if test="${not empty user.imgurl}">
+                        <img id="avatar" src="http://localhost:8081/video/${user.imgurl}" alt="">
                     </c:if>
 
                 </a>
@@ -71,13 +71,13 @@
                 <h3><a href="${pageContext.request.contextPath}/user/showMyProfile">返回个人中心</a></h3>
                 <div class="proflle_tab_workplace clearfix">
                     <div class="profile_avatar_area">
-                        <c:if test="${empty user.imgUrl}">
+                        <c:if test="${empty user.imgurl}">
                             <img src="${pageContext.request.contextPath}/img/avatar_lg.png">
                         </c:if>
 
-                        <c:if test="${not empty user.imgUrl}">
+                        <c:if test="${not empty user.imgurl}">
                             <img width="200px" height="200px"
-                                 src="http://localhost:8081/video/${user.imgUrl}">
+                                 src="http://localhost:8081/video/${user.imgurl}">
                         </c:if>
 
 

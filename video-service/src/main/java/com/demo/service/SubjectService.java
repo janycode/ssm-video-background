@@ -8,4 +8,7 @@ public interface SubjectService {
 
     List<Subject> findAll();
 
+    Subject findSubjectById(Integer id);
+
+    Subject findSubjectNameByVideoId(Integer id);
 }

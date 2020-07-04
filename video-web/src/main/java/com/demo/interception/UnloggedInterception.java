@@ -24,21 +24,23 @@ public class UnloggedInterception implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Admin loginAdmin = (Admin) request.getSession().getAttribute("loginAdmin");
-        System.out.println("拦截器 loginAdmin：" + loginAdmin);
+        //System.out.println("拦截器 loginAdmin：" + loginAdmin);
         if (loginAdmin == null) {
             // 转发到跳转登陆的方法，拦截器配置中需要配置 该资源不拦截
             request.getRequestDispatcher("/admin/toLogin").forward(request, response);
+            //System.out.println("拦截器 生效：重定向到登录页！");
         }
+        //System.out.println("拦截器 放行：正常访问！");
         return true;
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        System.out.println("控制器方法执行后，页面跳转前...");
+        //System.out.println("拦截器 控制器方法执行后，页面跳转前...");
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        System.out.println("jsp页面执行后...");
+        //System.out.println("拦截器 jsp页面执行后...");
     }
 }

@@ -6,6 +6,7 @@ import com.demo.pojo.VideoExample;
 import com.demo.service.VideoService;
 import com.demo.utils.QueryVo;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import javafx.scene.shape.Circle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,11 @@ public class VideoServiceImpl implements VideoService {
     private VideoMapper videoMapper;
 
     @Override
-    public List<Video> findAll(Integer pageNum, Integer pageSize, QueryVo queryVo) {
+    public PageInfo<Video> findAll(Integer pageNum, Integer pageSize, QueryVo queryVo) {
         PageHelper.startPage(pageNum, pageSize);
-        return videoMapper.findAll(queryVo);
+        List<Video> videoList = videoMapper.findAll(queryVo);
+        PageInfo<Video> pageInfo = new PageInfo<>(videoList);
+        return pageInfo;
     }
 
     @Override
@@ -57,5 +60,10 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public boolean add(Video video) {
         return videoMapper.insert(video) == 1;
+    }
+
+    @Override
+    public Video findVideoById(Integer id) {
+        return videoMapper.findVideoById(id);
     }
 }

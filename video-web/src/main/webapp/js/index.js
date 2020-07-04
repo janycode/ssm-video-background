@@ -179,6 +179,8 @@ function commitRegForm() {
                     //将注册的user信息展示
                     $("#regBlock").css("display", "none");
                     $("#userBlock").css("display", "block");
+                } else {
+                    alert("两次注册间隔时间太短，请稍后重试！");
                 }
             },
             error: function () {
@@ -215,6 +217,9 @@ function commitLogin() {
                 $("#userBlock").css("display", "block");
 
                 $("#isLogin").val(1);
+
+                // 登陆成功刷新当前页面
+                location.reload();
             } else {
                 alert("账号或密码错误！请重试！");
             }

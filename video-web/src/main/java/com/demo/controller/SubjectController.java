@@ -19,10 +19,13 @@ public class SubjectController {
 
     @RequestMapping("/selectAll")
     public ModelAndView findAll() {
-        List<Subject> subjectList = subjectService.findAll();
-
         ModelAndView mav = new ModelAndView();
+
+        // 导航栏下拉菜单
+        List<Subject> subjectList = subjectService.findAll();
         mav.addObject("subjectList", subjectList);
+
+        System.out.println(subjectList);
         mav.setViewName("/before/index.jsp");
         return mav;
     }

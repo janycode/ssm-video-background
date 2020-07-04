@@ -18,41 +18,7 @@
 
     <script src="${pageContext.request.contextPath}/js/jquery-1.12.4.min.js"></script>
 
-    <script>
-        function addFavorite2() {
-            var url = window.location;
-            var title = document.title;
-            var ua = navigator.userAgent.toLowerCase();
-            if (ua.indexOf("360se") > -1) {
-                alert("由于360浏览器功能限制，请按 Ctrl+D 手动收藏！");
-            } else if (ua.indexOf("msie 8") > -1) {
-                window.external.AddToFavoritesBar(url, title); //IE8
-            } else if (document.all) {
-                try {
-                    window.external.addFavorite(url, title);
-                } catch (e) {
-                    alert('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
-                }
-            } else if (window.sidebar) {
-                window.sidebar.addPanel(title, url, "");
-            } else {
-                alert('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
-            }
-        }
 
-        $(function () {
-
-
-            //div 两个哪个显示呢？
-            if (null != "${sessionScope.userAccount}" && "${sessionScope.userAccount}" != "") {
-                $("#regBlock").css("display", "none");
-                $("#userBlock").css("display", "block");
-            } else {
-                $("#regBlock").css("display", "block");
-                $("#userBlock").css("display", "none");
-            }
-        });
-    </script>
 </head>
 
 <body class="w100">
@@ -73,7 +39,7 @@
             <a href="${pageContext.request.contextPath}/user/showMyProfile" id="account">${sessionScope.userAccount}</a>
         </div>
 
-        <a onclick="JavaScript:addFavorite2()"><img src="${pageContext.request.contextPath}/img/sc.png"
+        <a onclick="addFavorite2()"><img src="${pageContext.request.contextPath}/img/sc.png"
                                                     draggable="false">加入收藏</a>
         <a onclick="pyRegisterCvt()" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2580094677&site=qq&menu=yes"><img
                 src="${pageContext.request.contextPath}/img/we.png" draggable="false">联系我们</a>
@@ -83,7 +49,7 @@
 </header>
 <nav class="w100">
     <div class="container">
-        <img src="${pageContext.request.contextPath}/img/logo.png" alt="Y先生教育的logo" onclick="location.href='index.html'"
+        <img src="${pageContext.request.contextPath}/img/logo.png" alt="Y先生教育的logo" onclick="location.href='/'"
              draggable="false">
         <ul class="text_13 f_right">
             <li>
@@ -256,10 +222,11 @@
 <script type="text/javascript">
 
     function getVideo(videoId) {
+        console.log("videoId=" + videoId);
         //alert("${sessionScope.userAccount}");
         //判断用户是否登录
         //alert($("#isLogin").val());
-        if ((null != "${sessionScope.userAccount}" && "${sessionScope.userAccount}" != "") || ($("#isLogin").val() == 1)) {
+        if ((null != "${sessionScope.userAccount}" && "${sessionScope.userAccount}" !== "") || ($("#isLogin").val() === 1)) {
             //如果登录
             location.href = "${pageContext.request.contextPath}/video/showVideo?videoId=" + videoId + "&subjectName=" + '${subject.subjectName}';
         } else {
@@ -267,11 +234,42 @@
             $("#login").removeClass("hidden");
 
         }
-
-
     }
 </script>
 
+<script>
+    function addFavorite2() {
+        var url = window.location;
+        var title = document.title;
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.indexOf("360se") > -1) {
+            alert("由于360浏览器功能限制，请按 Ctrl+D 手动收藏！");
+        } else if (ua.indexOf("msie 8") > -1) {
+            window.external.AddToFavoritesBar(url, title); //IE8
+        } else if (document.all) {
+            try {
+                window.external.addFavorite(url, title);
+            } catch (e) {
+                alert('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
+            }
+        } else if (window.sidebar) {
+            window.sidebar.addPanel(title, url, "");
+        } else {
+            alert('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
+        }
+    }
+
+    $(function () {
+        //div 两个哪个显示呢？
+        if (null != "${sessionScope.userAccount}" && "${sessionScope.userAccount}" != "") {
+            $("#regBlock").css("display", "none");
+            $("#userBlock").css("display", "block");
+        } else {
+            $("#regBlock").css("display", "block");
+            $("#userBlock").css("display", "none");
+        }
+    });
+</script>
 
 </body>
 

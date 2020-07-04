@@ -14,10 +14,12 @@
         <association property="speaker" javaType="com.demo.pojo.Speaker">
             <result column="id" property="id"/>
             <result column="speaker_name" property="speakerName"/>
+            <result column="head_img_url" property="headImgUrl"/>
         </association>
         <association property="course" javaType="com.demo.pojo.Course">
             <result column="id" property="id"/>
             <result column="course_title" property="courseTitle"/>
+            <result column="course_desc" property="courseDesc"/>
         </association>
     </resultMap>
     <resultMap id="ResultMapWithBLOBs" type="com.demo.pojo.Video" extends="BaseResultMap">
@@ -92,6 +94,20 @@
         video_url,
         image_url,
         play_num
+    </sql>
+    <sql id="Base_Column_List_Name">
+        video.id,
+        video.`title`,
+        video.`detail`,
+        video.`course_id`,
+        speaker.`speaker_name`,
+        speaker.`head_img_url`,
+        course.`course_title`,
+        course.`course_desc`,
+        video.`video_url`,
+        video.`image_url`,
+        video.`time`,
+        video.`play_num`
     </sql>
     <sql id="Blob_Column_List">
         detail
@@ -341,18 +357,13 @@
     </update>
 
     <select id="findAll" resultMap="BaseResultMap">
-        SELECT video.id,
-               video.`title`,
-               video.`detail`,
-               speaker.`speaker_name`,
-               course.`course_title`,
-               video.`time`,
-               video.`play_num`
+        SELECT
+        <include refid="Base_Column_List_Name"/>
         FROM video,
              speaker,
              course
-        WHERE video.`spearker_id` = speaker.`id`
-          AND video.`course_id` = course.`id`
+                WHERE video.`spearker_id` = speaker.`id`
+                  AND video.`course_id` = course.`id`
         <trim>
             <if test="title != null and title != ''">
                 AND video.title LIKE CONCAT('%', #{title,jdbcType=VARCHAR}, '%')
@@ -364,5 +375,15 @@
                 AND video.`course_id` = #{courseId,jdbcType=VARCHAR}
             </if>
         </trim>
+    </select>
+    <select id="findVideoById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List_Name"/>
+        FROM video,
+             speaker,
+             course
+        WHERE video.`spearker_id` = speaker.`id`
+          AND video.`course_id` = course.`id`
+          AND video.id = #{id,jdbcType=INTEGER}
     </select>
 </mapper>

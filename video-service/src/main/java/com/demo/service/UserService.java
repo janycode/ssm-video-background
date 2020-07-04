@@ -17,4 +17,6 @@ public interface UserService {
     User queryUserByEmail(String userAccount);
 
     boolean updatePassword(User user);
+
+    int updateUserByEmail(User user);
 }

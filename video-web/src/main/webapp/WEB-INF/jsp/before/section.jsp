@@ -31,7 +31,11 @@
 
             //通过ajax更新播放次数
             var params = {"id":"${video.id}", "playNum":"${video.playNum}"};
-            $.post("${pageContext.request.contextPath}/video/updatePlayNum", params);
+            $.post("${pageContext.request.contextPath}/video/updatePlayNum", params, function (data) {
+                if (data === "success") {
+                    // 更新播放次数的显示
+                }
+            });
         });
     </script>
 </head>
@@ -63,7 +67,7 @@
 </header>
 <nav class="w100">
     <div class="container">
-        <img src="${pageContext.request.contextPath}/img/logo.png" alt="Y先生教育的logo" onclick="location.href='index.html'"
+        <img src="${pageContext.request.contextPath}/img/logo.png" alt="Y先生教育的logo" onclick="location.href='/'"
              draggable="false">
         <ul class="text_13 f_right">
             <li>
@@ -132,8 +136,9 @@
 
             <c:forEach items="${course.videoList}" var="video">
                 <div class="chapter" onclick="load(${video.id})">
-                    <p class="biaoti"><a
-                            href="showVideo?videoId=${video.id}&subjectName=${subjectName}">${video.title}</a></p>
+                    <p class="biaoti">
+                        <a href="showVideo?videoId=${video.id}&subjectName=${subjectName}">${video.title}</a>
+                    </p>
                     <p class="lecturer">${video.detail}</p>
                     <p class="lecturer">讲师：${video.speaker.speakerName}</p>
                     <div class="v-info">

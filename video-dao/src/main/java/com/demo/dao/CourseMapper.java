@@ -2,6 +2,7 @@ package com.demo.dao;
 
 import com.demo.pojo.Course;
 import com.demo.pojo.CourseExample;
+import com.demo.pojo.Video;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -36,4 +37,6 @@ public interface CourseMapper {
     int updateByPrimaryKeyWithBLOBs(Course record);
 
     int updateByPrimaryKey(Course record);
+
+    Course findVideoListById(Integer courseId);
 }

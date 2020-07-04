@@ -30,4 +30,8 @@ public interface SubjectMapper {
     int updateByPrimaryKeySelective(Subject record);
 
     int updateByPrimaryKey(Subject record);
+
+    Subject findSubjectById(Integer id);
+
+    Subject findSubjectNameByVideoId(Integer id);
 }

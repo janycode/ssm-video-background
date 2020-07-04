@@ -2,12 +2,13 @@ package com.demo.service;
 
 import com.demo.pojo.Video;
 import com.demo.utils.QueryVo;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
 public interface VideoService {
 
-    List<Video> findAll(Integer pageNum, Integer pageSize, QueryVo queryVo);
+    PageInfo<Video> findAll(Integer pageNum, Integer pageSize, QueryVo queryVo);
 
     int delVideoById(Integer id);
 
@@ -18,4 +19,6 @@ public interface VideoService {
     boolean updateById(Video video);
 
     boolean add(Video video);
+
+    Video findVideoById(Integer id);
 }

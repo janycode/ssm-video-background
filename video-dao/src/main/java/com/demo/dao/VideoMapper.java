@@ -40,4 +40,6 @@ public interface VideoMapper {
     int updateByPrimaryKey(Video record);
 
     List<Video> findAll(QueryVo queryVo);
+
+    Video findVideoById(Integer id);
 }
